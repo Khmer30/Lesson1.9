@@ -39,6 +39,7 @@ class AddRegistrationTableViewController: UITableViewController {
     @IBOutlet var numberOfAdultsdStepper: UIStepper!
     @IBOutlet var numberOfChildrenLabel: UILabel!
     @IBOutlet var numberOfChildrenStepper: UIStepper!
+    @IBOutlet var wifiSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +48,7 @@ class AddRegistrationTableViewController: UITableViewController {
         checkInDatePicker.minimumDate = midnightToday
         checkInDatePicker.date = midnightToday
         updateDateViews()
+        updateNumberOfGuests()
         
     }
 
@@ -58,6 +60,7 @@ class AddRegistrationTableViewController: UITableViewController {
         let checkOutDate = checkOutDatePicker.date
         let numberOfAdults = Int(numberOfAdultsdStepper.value)
         let numberOfChildren = Int(numberOfChildrenStepper.value)
+        let hasWifi = wifiSwitch.isOn
         
         
         print("DONE TAPPED")
@@ -68,6 +71,7 @@ class AddRegistrationTableViewController: UITableViewController {
         print("checkOut: \(checkOutDate)")
         print("numberOdAdults: \(numberOfAdults)")
         print("numberOfChildren: \(numberOfChildren)")
+        print("wifi: \(hasWifi)")
     }
     
     func updateDateViews() {
@@ -85,8 +89,21 @@ class AddRegistrationTableViewController: UITableViewController {
         checkOutDateLabel.text = checkOutDatePicker.date.formatted(date: .abbreviated, time: .omitted)
     }
     
+    func updateNumberOfGuests() {
+        numberOfAdultsLabel.text = "\(Int(numberOfAdultsdStepper.value))"
+        numberOfChildrenLabel.text = "\(Int(numberOfChildrenStepper.value))"
+    }
+    
+    
     @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
         updateDateViews()
+        
+    }
+    
+    @IBAction func stepperValueChanged(_ sender: UIStepper) {
+        updateNumberOfGuests()
+    }
+    @IBAction func wifiSwitchChanged(_ sender: UISwitch) {
         
     }
     
