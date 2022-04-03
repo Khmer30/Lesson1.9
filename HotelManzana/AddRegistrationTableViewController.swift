@@ -25,11 +25,6 @@ class AddRegistrationTableViewController: UITableViewController {
             checkOutDatePicker.isHidden = !isCheckOutDatePickerVisible
         }
     }
-
-    @IBOutlet var numberOfAdultsLabel: UILabel!
-    @IBOutlet var numberOfAdultsdStepper: UIStepper!
-    @IBOutlet var numberOfChildrenLabel: UILabel!
-    @IBOutlet var numberOfChildrenStepper: UIStepper!
     
     @IBOutlet var firstNameTextField: UITextField!
     @IBOutlet var lastNameTextField: UITextField!
@@ -39,6 +34,11 @@ class AddRegistrationTableViewController: UITableViewController {
     @IBOutlet var checkInDatePicker: UIDatePicker!
     @IBOutlet var checkOutDateLabel: UILabel!
     @IBOutlet var checkOutDatePicker: UIDatePicker!
+    
+    @IBOutlet var numberOfAdultsLabel: UILabel!
+    @IBOutlet var numberOfAdultsdStepper: UIStepper!
+    @IBOutlet var numberOfChildrenLabel: UILabel!
+    @IBOutlet var numberOfChildrenStepper: UIStepper!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +56,8 @@ class AddRegistrationTableViewController: UITableViewController {
         let email = emailTextField.text ?? " "
         let checkInDate = checkInDatePicker.date
         let checkOutDate = checkOutDatePicker.date
+        let numberOfAdults = Int(numberOfAdultsdStepper.value)
+        let numberOfChildren = Int(numberOfChildrenStepper.value)
         
         
         print("DONE TAPPED")
@@ -64,6 +66,8 @@ class AddRegistrationTableViewController: UITableViewController {
         print("email: \(email)")
         print("checkIn: \(checkInDate)")
         print("checkOut: \(checkOutDate)")
+        print("numberOdAdults: \(numberOfAdults)")
+        print("numberOfChildren: \(numberOfChildren)")
     }
     
     func updateDateViews() {
