@@ -15,6 +15,7 @@
 		74446C1C27F1908D0034DBC0 /* Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74446C1B27F1908D0034DBC0 /* Registration.swift */; };
 		74446C1E27F190C10034DBC0 /* RoomType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74446C1D27F190C10034DBC0 /* RoomType.swift */; };
 		74446C2027F19F4E0034DBC0 /* AddRegistrationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74446C1F27F19F4E0034DBC0 /* AddRegistrationTableViewController.swift */; };
+		74CCEA9927F9A56800DA7F0C /* SelectRoomTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CCEA9827F9A56800DA7F0C /* SelectRoomTypeTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		74446C1B27F1908D0034DBC0 /* Registration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Registration.swift; sourceTree = "<group>"; };
 		74446C1D27F190C10034DBC0 /* RoomType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomType.swift; sourceTree = "<group>"; };
 		74446C1F27F19F4E0034DBC0 /* AddRegistrationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRegistrationTableViewController.swift; sourceTree = "<group>"; };
+		74CCEA9827F9A56800DA7F0C /* SelectRoomTypeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRoomTypeTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,10 +64,11 @@
 			children = (
 				74446C0727F18F520034DBC0 /* AppDelegate.swift */,
 				74446C0927F18F520034DBC0 /* SceneDelegate.swift */,
-				74446C0D27F18F520034DBC0 /* Main.storyboard */,
 				74446C1B27F1908D0034DBC0 /* Registration.swift */,
 				74446C1D27F190C10034DBC0 /* RoomType.swift */,
 				74446C1F27F19F4E0034DBC0 /* AddRegistrationTableViewController.swift */,
+				74CCEA9827F9A56800DA7F0C /* SelectRoomTypeTableViewController.swift */,
+				74446C0D27F18F520034DBC0 /* Main.storyboard */,
 				74446C1027F18F550034DBC0 /* Assets.xcassets */,
 				74446C1227F18F550034DBC0 /* LaunchScreen.storyboard */,
 				74446C1527F18F550034DBC0 /* Info.plist */,
@@ -144,6 +147,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74CCEA9927F9A56800DA7F0C /* SelectRoomTypeTableViewController.swift in Sources */,
 				74446C1E27F190C10034DBC0 /* RoomType.swift in Sources */,
 				74446C2027F19F4E0034DBC0 /* AddRegistrationTableViewController.swift in Sources */,
 				74446C0827F18F520034DBC0 /* AppDelegate.swift in Sources */,

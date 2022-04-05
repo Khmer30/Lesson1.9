@@ -39,6 +39,7 @@ class AddRegistrationTableViewController: UITableViewController {
     @IBOutlet var numberOfAdultsdStepper: UIStepper!
     @IBOutlet var numberOfChildrenLabel: UILabel!
     @IBOutlet var numberOfChildrenStepper: UIStepper!
+    
     @IBOutlet var wifiSwitch: UISwitch!
     
     override func viewDidLoad() {
@@ -94,7 +95,6 @@ class AddRegistrationTableViewController: UITableViewController {
         numberOfChildrenLabel.text = "\(Int(numberOfChildrenStepper.value))"
     }
     
-    
     @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
         updateDateViews()
         
@@ -103,6 +103,7 @@ class AddRegistrationTableViewController: UITableViewController {
     @IBAction func stepperValueChanged(_ sender: UIStepper) {
         updateNumberOfGuests()
     }
+    
     @IBAction func wifiSwitchChanged(_ sender: UISwitch) {
         
     }
