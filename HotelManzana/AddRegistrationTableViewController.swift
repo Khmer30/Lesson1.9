@@ -76,7 +76,6 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     
     @IBOutlet var roomTypeLabel: UILabel!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -135,7 +134,6 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     
     @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
         updateDateViews()
-        
     }
     
     @IBAction func stepperValueChanged(_ sender: UIStepper) {
@@ -153,8 +151,7 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         
         return selectRoomTypeController
     }
-    
-    
+
     func updateRoomType() {
         if let roomType = roomType {
             roomTypeLabel.text = roomType.name
@@ -202,9 +199,7 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         }
     }
     
-    
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
-    
 }
