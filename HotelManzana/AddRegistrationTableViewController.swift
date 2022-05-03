@@ -72,9 +72,18 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     @IBOutlet var numberOfChildrenLabel: UILabel!
     @IBOutlet var numberOfChildrenStepper: UIStepper!
     
+    @IBOutlet var fromDate: UIDatePicker!
+    @IBOutlet var toDate: UIDatePicker!
     @IBOutlet var wifiSwitch: UISwitch!
-    
     @IBOutlet var roomTypeLabel: UILabel!
+    
+    @IBOutlet var nightsLabel: UILabel!
+    
+    @IBAction func dateChange(_ sender: UIDatePicker) {
+        print(sender.date)
+        updateNightsLabel()
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,9 +94,33 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         updateDateViews()
         updateNumberOfGuests()
         updateRoomType()
+        updateNightsLabel()
+        
+    }
+    
+    func updateNightsLabel() {
+        let numberOfNights = calculateNumberOfNights()
+        nightsLabel.text = "\(numberOfNights)"
+        
+    }
+    let oneDayInSecond = Double(86400)
+    fileprivate func preventInvalidDate() {
+        let toMaximum = toDate.date.timeIntervalSinceReferenceDate - oneDayInSecond
+        fromDate.maximumDate = Date(timeIntervalSinceReferenceDate: toMaximum)
+        let fromMinimum = fromDate.date.timeIntervalSinceReferenceDate + oneDayInSecond
+        toDate.minimumDate = Date(timeIntervalSinceReferenceDate: fromMinimum)
+    }
+    
+    func calculateNumberOfNights () -> Int {
+        
+        preventInvalidDate()
+        
+        let diff = toDate.date.timeIntervalSinceReferenceDate - fromDate.date.timeIntervalSinceReferenceDate
+        return Int(diff/oneDayInSecond)
         
     }
 
+    
     @IBAction func doneBarbuttonTapped(_ sender: UIBarButtonItem) {
         let firstName = firstNameTextField.text ?? " "
         let lastName = lastNameTextField.text ?? " "
