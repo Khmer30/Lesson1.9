@@ -72,18 +72,17 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     @IBOutlet var numberOfChildrenLabel: UILabel!
     @IBOutlet var numberOfChildrenStepper: UIStepper!
     
-    @IBOutlet var fromDate: UIDatePicker!
-    @IBOutlet var toDate: UIDatePicker!
     @IBOutlet var wifiSwitch: UISwitch!
     @IBOutlet var roomTypeLabel: UILabel!
     
+    @IBOutlet var fromDate: UIDatePicker!
+    @IBOutlet var toDate: UIDatePicker!
     @IBOutlet var nightsLabel: UILabel!
     
     @IBAction func dateChange(_ sender: UIDatePicker) {
         print(sender.date)
         updateNightsLabel()
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,12 +96,39 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         updateNightsLabel()
         
     }
+
+    
+    @IBAction func doneBarbuttonTapped(_ sender: UIBarButtonItem) {
+        let firstName = firstNameTextField.text ?? " "
+        let lastName = lastNameTextField.text ?? " "
+        let email = emailTextField.text ?? " "
+        let checkInDate = checkInDatePicker.date
+        let checkOutDate = checkOutDatePicker.date
+        let numberOfAdults = Int(numberOfAdultsdStepper.value)
+        let numberOfChildren = Int(numberOfChildrenStepper.value)
+        let hasWifi = wifiSwitch.isOn
+        let roomChoice = roomType?.name ?? "Not Set"
+        
+        
+        
+        print("DONE TAPPED")
+        print("firstName: \(firstName)")
+        print("lastName: \(lastName)")
+        print("email: \(email)")
+        print("checkIn: \(checkInDate)")
+        print("checkOut: \(checkOutDate)")
+        print("numberOdAdults: \(numberOfAdults)")
+        print("numberOfChildren: \(numberOfChildren)")
+        print("wifi: \(hasWifi)")
+        print("roomType: \(roomChoice)")
+    }
     
     func updateNightsLabel() {
         let numberOfNights = calculateNumberOfNights()
         nightsLabel.text = "\(numberOfNights)"
         
     }
+    
     let oneDayInSecond = Double(86400)
     fileprivate func preventInvalidDate() {
         let toMaximum = toDate.date.timeIntervalSinceReferenceDate - oneDayInSecond
@@ -120,31 +146,6 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         
     }
 
-    
-    @IBAction func doneBarbuttonTapped(_ sender: UIBarButtonItem) {
-        let firstName = firstNameTextField.text ?? " "
-        let lastName = lastNameTextField.text ?? " "
-        let email = emailTextField.text ?? " "
-        let checkInDate = checkInDatePicker.date
-        let checkOutDate = checkOutDatePicker.date
-        let numberOfAdults = Int(numberOfAdultsdStepper.value)
-        let numberOfChildren = Int(numberOfChildrenStepper.value)
-        let hasWifi = wifiSwitch.isOn
-        let roomChoice = roomType?.name ?? "Not Set"
-        
-        
-        print("DONE TAPPED")
-        print("firstName: \(firstName)")
-        print("lastName: \(lastName)")
-        print("email: \(email)")
-        print("checkIn: \(checkInDate)")
-        print("checkOut: \(checkOutDate)")
-        print("numberOdAdults: \(numberOfAdults)")
-        print("numberOfChildren: \(numberOfChildren)")
-        print("wifi: \(hasWifi)")
-        print("roomType: \(roomChoice)")
-    }
-    
     func updateDateViews() {
 //        checkOutDatePicker.minimumDate = checkInDatePicker.date.addingTimeInterval(86400)
 //
@@ -175,6 +176,10 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     
     @IBAction func wifiSwitchChanged(_ sender: UISwitch) {
         
+    }
+    
+    @IBAction func datePickerViewValueChanged(_ sender: UIDatePicker) {
+        updateNightsLabel()
     }
     
     @IBSegueAction func selectRoomType(_ coder: NSCoder) -> SelectRoomTypeTableViewController? {
