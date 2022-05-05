@@ -79,6 +79,9 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     @IBOutlet var toDate: UIDatePicker!
     @IBOutlet var nightsLabel: UILabel!
     
+    @IBOutlet var checkInDatePickerView: UILabel!
+    @IBOutlet var checkOutDatePickerView: UILabel!
+    
     @IBAction func dateChange(_ sender: UIDatePicker) {
         print(sender.date)
         updateNightsLabel()
@@ -97,7 +100,6 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         
     }
 
-    
     @IBAction func doneBarbuttonTapped(_ sender: UIBarButtonItem) {
         let firstName = firstNameTextField.text ?? " "
         let lastName = lastNameTextField.text ?? " "
@@ -108,7 +110,6 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         let numberOfChildren = Int(numberOfChildrenStepper.value)
         let hasWifi = wifiSwitch.isOn
         let roomChoice = roomType?.name ?? "Not Set"
-        
         
         
         print("DONE TAPPED")
