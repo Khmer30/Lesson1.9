@@ -15,6 +15,7 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     }
 
     var roomType: RoomType?
+    var wifiIsOn = false
     
     var registration: Registration? {
         
@@ -79,17 +80,15 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     @IBOutlet var toDate: UIDatePicker!
     @IBOutlet var nightsLabel: UILabel!
     
+    @IBOutlet var totalPricePerRoomType: UILabel!
     @IBOutlet var checkInOutDateLabel: UILabel!
     @IBOutlet var roomTypeChargesLabel: UILabel!
     
+    @IBOutlet var wifiChargesLabel: UILabel!
+   
+    @IBOutlet var wifiButton: UIButton!
     
-    @IBOutlet var checkInDatePickerView: UILabel!
-    @IBOutlet var checkOutDatePickerView: UILabel!
-    
-    @IBAction func dateChange(_ sender: UIDatePicker) {
-        print(sender.date)
-        updateNightsLabel()
-    }
+    @IBOutlet var totalChargeLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,41 +102,39 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         updateNightsLabel()
         updateCheckInCheckOutDateLabel()
         roomTypeChargesLabel.text = "Not Set"
+        totalPricePerRoomType.text = "$"
+        updateUI()
         
-    }
-
-    @IBAction func doneBarbuttonTapped(_ sender: UIBarButtonItem) {
-        let firstName = firstNameTextField.text ?? " "
-        let lastName = lastNameTextField.text ?? " "
-        let email = emailTextField.text ?? " "
-        let checkInDate = checkInDatePicker.date
-        let checkOutDate = checkOutDatePicker.date
-        let numberOfAdults = Int(numberOfAdultsdStepper.value)
-        let numberOfChildren = Int(numberOfChildrenStepper.value)
-        let hasWifi = wifiSwitch.isOn
-        let roomChoice = roomType?.name ?? "Not Set"
-        
-        
-        print("DONE TAPPED")
-        print("firstName: \(firstName)")
-        print("lastName: \(lastName)")
-        print("email: \(email)")
-        print("checkIn: \(checkInDate)")
-        print("checkOut: \(checkOutDate)")
-        print("numberOdAdults: \(numberOfAdults)")
-        print("numberOfChildren: \(numberOfChildren)")
-        print("wifi: \(hasWifi)")
-        print("roomType: \(roomChoice)")
     }
     
-    func calculateTotalNights() {
+    @IBAction func wifiButtonPressed(_ sender: UIButton) {
+        wifiIsOn.toggle()
+    }
+    
+    @IBAction func dateChange(_ sender: UIDatePicker) {
+        print(sender.date)
+        updateNightsLabel()
+    }
+    
+    func updateUI() {
+            if wifiIsOn {
+                wifiButton.setTitle("No", for: .normal)
+            } else {
+                wifiButton.setTitle("Yes", for: .normal)
+            }
+    }
+
+    func mutlplyTotalPricePerRoom() {
+        
+    }
+    
+    func multiplyTotalWifiCharged() {
         
     }
     
     func updateCheckInCheckOutDateLabel() {
 
         checkInOutDateLabel.text = "\(checkInDateLabel.text!) - \(checkOutDateLabel.text!)"
-
     }
     
     func updateNightsLabel() {
@@ -158,7 +155,6 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     func calculateNumberOfNights () -> Int {
         
         preventInvalidDate()
-        
         
         let diff = toDate.date.timeIntervalSinceReferenceDate - fromDate.date.timeIntervalSinceReferenceDate
         let days = floor(diff/86400)
@@ -184,6 +180,30 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     func updateNumberOfGuests() {
         numberOfAdultsLabel.text = "\(Int(numberOfAdultsdStepper.value))"
         numberOfChildrenLabel.text = "\(Int(numberOfChildrenStepper.value))"
+    }
+    
+    @IBAction func doneBarbuttonTapped(_ sender: UIBarButtonItem) {
+        let firstName = firstNameTextField.text ?? " "
+        let lastName = lastNameTextField.text ?? " "
+        let email = emailTextField.text ?? " "
+        let checkInDate = checkInDatePicker.date
+        let checkOutDate = checkOutDatePicker.date
+        let numberOfAdults = Int(numberOfAdultsdStepper.value)
+        let numberOfChildren = Int(numberOfChildrenStepper.value)
+        let hasWifi = wifiSwitch.isOn
+        let roomChoice = roomType?.name ?? "Not Set"
+        
+        
+        print("DONE TAPPED")
+        print("firstName: \(firstName)")
+        print("lastName: \(lastName)")
+        print("email: \(email)")
+        print("checkIn: \(checkInDate)")
+        print("checkOut: \(checkOutDate)")
+        print("numberOdAdults: \(numberOfAdults)")
+        print("numberOfChildren: \(numberOfChildren)")
+        print("wifi: \(hasWifi)")
+        print("roomType: \(roomChoice)")
     }
     
     @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
