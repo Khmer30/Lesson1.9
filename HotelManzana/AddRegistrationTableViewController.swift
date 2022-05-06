@@ -79,6 +79,10 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     @IBOutlet var toDate: UIDatePicker!
     @IBOutlet var nightsLabel: UILabel!
     
+    @IBOutlet var checkInOutDateLabel: UILabel!
+    @IBOutlet var roomTypeChargesLabel: UILabel!
+    
+    
     @IBOutlet var checkInDatePickerView: UILabel!
     @IBOutlet var checkOutDatePickerView: UILabel!
     
@@ -97,6 +101,8 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         updateNumberOfGuests()
         updateRoomType()
         updateNightsLabel()
+        updateCheckInCheckOutDateLabel()
+        roomTypeChargesLabel.text = "Not Set"
         
     }
 
@@ -124,14 +130,25 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         print("roomType: \(roomChoice)")
     }
     
+    func calculateTotalNights() {
+        
+    }
+    
+    func updateCheckInCheckOutDateLabel() {
+
+        checkInOutDateLabel.text = "\(checkInDateLabel.text!) - \(checkOutDateLabel.text!)"
+
+    }
+    
     func updateNightsLabel() {
         let numberOfNights = calculateNumberOfNights()
         nightsLabel.text = "\(numberOfNights)"
         
     }
-    
-    let oneDayInSecond = Double(86400)
+  
+    let oneDayInSecond = Double(3600)
     fileprivate func preventInvalidDate() {
+        
         let toMaximum = toDate.date.timeIntervalSinceReferenceDate - oneDayInSecond
         fromDate.maximumDate = Date(timeIntervalSinceReferenceDate: toMaximum)
         let fromMinimum = fromDate.date.timeIntervalSinceReferenceDate + oneDayInSecond
@@ -142,8 +159,10 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         
         preventInvalidDate()
         
+        
         let diff = toDate.date.timeIntervalSinceReferenceDate - fromDate.date.timeIntervalSinceReferenceDate
-        return Int(diff/oneDayInSecond)
+        let days = floor(diff/86400)
+        return Int(days)
         
     }
 
@@ -169,6 +188,7 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     
     @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
         updateDateViews()
+        updateCheckInCheckOutDateLabel()
     }
     
     @IBAction func stepperValueChanged(_ sender: UIStepper) {
@@ -194,6 +214,8 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     func updateRoomType() {
         if let roomType = roomType {
             roomTypeLabel.text = roomType.name
+            roomTypeChargesLabel.text = "\(roomType.name) @ $\(roomType.price)/ night"
+        
         } else {
             roomTypeLabel.text = "Not Set"
         }
