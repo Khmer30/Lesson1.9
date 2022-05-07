@@ -86,9 +86,18 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     
     @IBOutlet var wifiChargesLabel: UILabel!
    
-    @IBOutlet var wifiButton: UIButton!
+    @IBOutlet var wifiLabel: UILabel!
     
     @IBOutlet var totalChargeLabel: UILabel!
+    
+    fileprivate func updateWifilLabel(_ withWifi: Bool) {
+        wifiLabel.text = withWifi ? "Yes" : "No"
+    }
+    
+    @IBAction func onWifiChanged(_ sender: UISwitch) {
+        updateWifilLabel(sender.isOn)
+        updateTotalWifiCharged()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,33 +112,23 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         updateCheckInCheckOutDateLabel()
         roomTypeChargesLabel.text = "Not Set"
         totalPricePerRoomType.text = "$"
-        updateUI()
+        updateWifilLabel(wifiSwitch.isOn)
+        updateTotalWifiCharged()
         
-    }
-    
-    @IBAction func wifiButtonPressed(_ sender: UIButton) {
-        wifiIsOn.toggle()
     }
     
     @IBAction func dateChange(_ sender: UIDatePicker) {
         print(sender.date)
         updateNightsLabel()
+        updateTotalWifiCharged()
+        updateTotalPricePerRoom()
     }
     
-    func updateUI() {
-            if wifiIsOn {
-                wifiButton.setTitle("No", for: .normal)
-            } else {
-                wifiButton.setTitle("Yes", for: .normal)
-            }
-    }
-
-    func mutlplyTotalPricePerRoom() {
-        
-    }
-    
-    func multiplyTotalWifiCharged() {
-        
+    func updateTotalWifiCharged() {
+        let numberOfNights = calculateNumberOfNights()
+        let wifiPrice = wifiSwitch.isOn ? 10 : 0
+        let totalWifiCharges = numberOfNights *  wifiPrice
+        wifiChargesLabel.text = "\(totalWifiCharges)"
     }
     
     func updateCheckInCheckOutDateLabel() {
@@ -215,10 +214,6 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         updateNumberOfGuests()
     }
     
-    @IBAction func wifiSwitchChanged(_ sender: UISwitch) {
-        
-    }
-    
     @IBAction func datePickerViewValueChanged(_ sender: UIDatePicker) {
         updateNightsLabel()
     }
@@ -230,7 +225,20 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         
         return selectRoomTypeController
     }
-
+    
+    func updateTotalPricePerRoom() {
+        if let roomType = roomType {
+            let numberOfNights = calculateNumberOfNights()
+            let roomCharges = roomType.price * numberOfNights
+            totalPricePerRoomType.text = "\(roomCharges)"
+        } else {
+            totalPricePerRoomType.text = "$ 0"
+        }
+        
+    }
+    
+    var totalCharges = 0
+    
     func updateRoomType() {
         if let roomType = roomType {
             roomTypeLabel.text = roomType.name
@@ -239,6 +247,8 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         } else {
             roomTypeLabel.text = "Not Set"
         }
+        updateTotalPricePerRoom()
+    
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
