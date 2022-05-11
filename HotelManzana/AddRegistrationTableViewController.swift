@@ -9,13 +9,16 @@ import UIKit
 
 class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeTableViewControllerDelegate {
     
+    var wifiCharges: Int = 0
+    var roomCharges: Int = 0
+    var totalCharge: Int = 0
+    
     func selectRoomTypeTableViewController(_ controller: SelectRoomTypeTableViewController, didSelect roomType: RoomType) {
         self.roomType = roomType
         updateRoomType()
     }
 
     var roomType: RoomType?
-    var wifiIsOn = false
     
     var registration: Registration? {
         
@@ -85,18 +88,17 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     @IBOutlet var roomTypeChargesLabel: UILabel!
     
     @IBOutlet var wifiChargesLabel: UILabel!
-   
     @IBOutlet var wifiLabel: UILabel!
     
     @IBOutlet var totalChargeLabel: UILabel!
     
-    fileprivate func updateWifilLabel(_ withWifi: Bool) {
+    fileprivate func updateWifiLabel(_ withWifi: Bool) {
         wifiLabel.text = withWifi ? "Yes" : "No"
     }
     
     @IBAction func onWifiChanged(_ sender: UISwitch) {
-        updateWifilLabel(sender.isOn)
-        updateTotalWifiCharged()
+        updateWifiLabel(sender.isOn)
+        updateTotalWifiCharges()
     }
     
     override func viewDidLoad() {
@@ -112,23 +114,32 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         updateCheckInCheckOutDateLabel()
         roomTypeChargesLabel.text = "Not Set"
         totalPricePerRoomType.text = "$"
-        updateWifilLabel(wifiSwitch.isOn)
-        updateTotalWifiCharged()
+        updateWifiLabel(wifiSwitch.isOn)
+        updateTotalWifiCharges()
+        updateFinalChrages()
+        
         
     }
     
     @IBAction func dateChange(_ sender: UIDatePicker) {
         print(sender.date)
         updateNightsLabel()
-        updateTotalWifiCharged()
+        updateTotalWifiCharges()
         updateTotalPricePerRoom()
+        updateFinalChrages()
     }
     
-    func updateTotalWifiCharged() {
+    func updateFinalChrages() {
+
+           totalChargeLabel.text = "$\(wifiCharges + roomCharges)"
+    }
+    
+    func updateTotalWifiCharges() {
         let numberOfNights = calculateNumberOfNights()
         let wifiPrice = wifiSwitch.isOn ? 10 : 0
-        let totalWifiCharges = numberOfNights *  wifiPrice
-        wifiChargesLabel.text = "\(totalWifiCharges)"
+        wifiCharges = numberOfNights *  wifiPrice
+        wifiChargesLabel.text = "$\(wifiCharges)"
+        updateFinalChrages()
     }
     
     func updateCheckInCheckOutDateLabel() {
@@ -162,14 +173,7 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     }
 
     func updateDateViews() {
-//        checkOutDatePicker.minimumDate = checkInDatePicker.date.addingTimeInterval(86400)
-//
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateStyle = .medium
-//
-//        checkInDateLabel.text = dateFormatter.string(from: checkInDatePicker.date)
-//        checkOutDateLabel.text = dateFormatter.string(from: checkOutDatePicker.date)
-        
+
         checkOutDatePicker.minimumDate = Calendar.current.date(byAdding: .day, value: 1, to: checkInDatePicker.date)
         
         checkInDateLabel.text = checkInDatePicker.date.formatted(date: .abbreviated, time: .omitted)
@@ -229,15 +233,14 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     func updateTotalPricePerRoom() {
         if let roomType = roomType {
             let numberOfNights = calculateNumberOfNights()
-            let roomCharges = roomType.price * numberOfNights
-            totalPricePerRoomType.text = "\(roomCharges)"
+            roomCharges = roomType.price * numberOfNights
+            totalPricePerRoomType.text = "$\(roomCharges)"
         } else {
+            roomCharges = 0
             totalPricePerRoomType.text = "$ 0"
         }
-        
+        updateFinalChrages()
     }
-    
-    var totalCharges = 0
     
     func updateRoomType() {
         if let roomType = roomType {
